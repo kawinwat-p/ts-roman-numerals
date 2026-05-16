@@ -58,7 +58,7 @@ function validateInput(roman: string): boolean {
 
   // D, L, V cannot be repeated
   if (/DD|LL|VV/.test(roman)) return false;
-    
+
   // I, X, C, M cannot repeat more than 3 times in succession
   if (/IIII|XXXX|CCCC|MMMM/.test(roman)) return false;
 
@@ -93,17 +93,9 @@ function validateInput(roman: string): boolean {
   return true;
 }
 
-function main(): void {
-  const roman = process.argv[2];
-  console.log(`Input: ${roman}`);
-  if (!roman) {
-    console.error("Please provide a Roman numeral as an argument.");
-    process.exit(1);
-  }
-
+export function romanToDecimalMain(roman: string): number | string {
   if (!validateInput(roman)) {
-    console.error("Invalid Roman numeral.");
-    process.exit(1);
+    return "Invalid Roman numeral.";
   }
 
   let result: number = 0;
@@ -118,7 +110,23 @@ function main(): void {
     result += romanToDecimal(current);
   }
 
-  console.log(result);
+  return result;
 }
 
-main();
+export function main(): void {
+  const roman = process.argv[2];
+  console.log(`Input: ${roman}`);
+  if (!roman) {
+    console.error("Please provide a Roman numeral as an argument.");
+    process.exit(1);
+  }
+
+  const result = romanToDecimalMain(roman);
+  console.log(`Output: ${result}`);
+}
+
+const isMain = process.argv[1]?.endsWith("romanToDecimal.ts");
+
+if (isMain) {
+  main();
+}
