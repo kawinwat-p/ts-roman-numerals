@@ -27,6 +27,11 @@ function decimalToRoman(decimal: number): string {
   return result;
 }
 
+function validateInput(decimal: number): boolean {
+  if (decimal <= 0 || decimal >= 4000) return false;
+  return true;
+}
+
 function main(): void {
   const input = process.argv[2];
 
@@ -39,6 +44,10 @@ function main(): void {
 
   const decimal = parseInt(input, 10);
 
+  if (!validateInput(decimal)) {
+    console.log("Please enter a number between 1 and 3999.");
+    process.exit(1);
+  }
   console.log(decimalToRoman(decimal));
 }
 
