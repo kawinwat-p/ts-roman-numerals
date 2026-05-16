@@ -1,4 +1,4 @@
-const roman_values: Record<string, number> = {
+const ROMAN_VALUES: Readonly<Record<string, number>> = {
   I: 1,
   V: 5,
   X: 10,
@@ -8,7 +8,7 @@ const roman_values: Record<string, number> = {
   M: 1000,
 };
 
-function seperateRomanNumber(roman: string): string[] {
+function splitIntoGroups(roman: string): string[] {
   let romanNumber: string[] = [];
 
   let number: string = "";
@@ -16,13 +16,13 @@ function seperateRomanNumber(roman: string): string[] {
     const current: string = roman[i] || "";
     const next: string = roman[i + 1] || "";
 
-    if (!roman_values[current] || !roman_values[next]) {
+    if (!ROMAN_VALUES[current] || !ROMAN_VALUES[next]) {
       number += current;
       romanNumber.push(number);
       number = "";
       break;
     }
-    if (roman_values[current] > roman_values[next]) {
+    if (ROMAN_VALUES[current] > ROMAN_VALUES[next]) {
       number += current;
       romanNumber.push(number);
       number = "";
@@ -39,14 +39,14 @@ function romanToDecimal(roman: string): number {
   for (let i = 0; i < roman.length; i++) {
     const current: string = roman[i] || "";
     const previous: string = roman[i - 1] || "";
-    if (!roman_values[current] || !roman_values[previous]) {
-      result += roman_values[current] || 0;
+    if (!ROMAN_VALUES[current] || !ROMAN_VALUES[previous]) {
+      result += ROMAN_VALUES[current] || 0;
       continue;
     }
-    if (roman_values[current] > roman_values[previous]) {
-      result = roman_values[current] - result;
+    if (ROMAN_VALUES[current] > ROMAN_VALUES[previous]) {
+      result = ROMAN_VALUES[current] - result;
     } else {
-      result += roman_values[current];
+      result += ROMAN_VALUES[current];
     }
   }
   return result;
@@ -79,13 +79,13 @@ function validateInput(roman: string): boolean {
     const next = roman[i + 1] || 0;
     const after = roman[i + 2] || 0;
 
-    if (!roman_values[current] || !roman_values[next] || !roman_values[after]) {
+    if (!ROMAN_VALUES[current] || !ROMAN_VALUES[next] || !ROMAN_VALUES[after]) {
       continue;
     }
 
     if (
-      roman_values[current] < roman_values[after] &&
-      roman_values[next] <= roman_values[after]
+      ROMAN_VALUES[current] < ROMAN_VALUES[after] &&
+      ROMAN_VALUES[next] <= ROMAN_VALUES[after]
     )
       return false;
   }
@@ -100,7 +100,7 @@ export function romanToDecimalMain(roman: string): number | string {
 
   let result: number = 0;
 
-  const romanNumber: string[] = seperateRomanNumber(roman);
+  const romanNumber: string[] = splitIntoGroups(roman);
 
   for (let i = 0; i < romanNumber.length; i++) {
     const current: string = romanNumber[i] || "";
