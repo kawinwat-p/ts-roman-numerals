@@ -1,4 +1,4 @@
-const decimal_values: [number, string][] = [
+const DECIMAL_VALUES: Readonly<[number, string][]> = [
   [1000, "M"],
   [900, "CM"],
   [500, "D"],
@@ -17,7 +17,7 @@ const decimal_values: [number, string][] = [
 function decimalToRoman(decimal: number): string {
   let result: string = "";
 
-  for (const [value, symbol] of decimal_values) {
+  for (const [value, symbol] of DECIMAL_VALUES) {
     while (decimal >= value) {
       result += symbol;
       decimal -= value;
