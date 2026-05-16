@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node --disable-warning=ExperimentalWarning --experimental-strip-types src/romanToDecimal.ts",
+    "start:decimal": "node --disable-warning=ExperimentalWarning --experimental-strip-types src/decimalToRoman.ts",
     "test": "node --disable-warning=ExperimentalWarning --experimental-strip-types --test src/*.test.ts"
   },
   "keywords": [],
