@@ -32,6 +32,13 @@ function validateInput(decimal: number): boolean {
   return true;
 }
 
+export function decimalToRomanMain(decimal: number): string {
+  if (!validateInput(decimal)) {
+    return "Invalid input.";
+  }
+  return decimalToRoman(decimal);
+}
+
 function main(): void {
   const input = process.argv[2];
 
@@ -44,11 +51,12 @@ function main(): void {
 
   const decimal = parseInt(input, 10);
 
-  if (!validateInput(decimal)) {
-    console.log("Please enter a number between 1 and 3999.");
-    process.exit(1);
-  }
-  console.log(decimalToRoman(decimal));
+  console.log(`Input: ${decimal}`);
+  console.log(`Output: ${decimalToRomanMain(decimal)}`);
 }
 
-main();
+const isMain = process.argv[1]?.endsWith("decimalToRoman.ts");
+
+if (isMain) {
+  main();
+}
