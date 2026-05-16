@@ -52,11 +52,57 @@ function romanToDecimal(roman: string): number {
   return result;
 }
 
+function validateInput(roman: string): boolean {
+  // only valid characters
+  if (/[^IVXLCDM]/.test(roman)) return false;
+
+  // D, L, V cannot be repeated
+  if (/DD|LL|VV/.test(roman)) return false;
+    
+  // I, X, C, M cannot repeat more than 3 times in succession
+  if (/IIII|XXXX|CCCC|MMMM/.test(roman)) return false;
+
+  // V, L, D can never be subtracted
+  if (/VX|VL|VC|VD|VM/.test(roman)) return false;
+  if (/LX|LC|LD|LM/.test(roman)) return false;
+  if (/DM/.test(roman)) return false;
+
+  // I can only subtract from V and X
+  if (/IL|IC|ID|IM/.test(roman)) return false;
+
+  // X can only subtract from L and C
+  if (/XD|XM/.test(roman)) return false;
+
+  // only one small-value symbol may be subtracted
+  for (let i = 0; i < roman.length - 2; i++) {
+    const current = roman[i] || 0;
+    const next = roman[i + 1] || 0;
+    const after = roman[i + 2] || 0;
+
+    if (!roman_values[current] || !roman_values[next] || !roman_values[after]) {
+      continue;
+    }
+
+    if (
+      roman_values[current] < roman_values[after] &&
+      roman_values[next] <= roman_values[after]
+    )
+      return false;
+  }
+
+  return true;
+}
+
 function main(): void {
   const roman = process.argv[2];
   console.log(`Input: ${roman}`);
   if (!roman) {
     console.error("Please provide a Roman numeral as an argument.");
+    process.exit(1);
+  }
+
+  if (!validateInput(roman)) {
+    console.error("Invalid Roman numeral.");
     process.exit(1);
   }
 
